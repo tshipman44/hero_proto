@@ -1,6 +1,5 @@
 import { STAGES } from "./constants";
 import type { GenerateRequest } from "./schema";
-import { GEMINI_RESPONSE_JSON_SCHEMA } from "./schema";
 
 export type GeminiGenerationResult = {
   rawApiResponse: unknown;
@@ -144,8 +143,7 @@ function buildGeminiRequest(input: GenerateRequest) {
     generationConfig: {
       temperature: 0.35,
       maxOutputTokens: 8192,
-      responseMimeType: "application/json",
-      responseJsonSchema: GEMINI_RESPONSE_JSON_SCHEMA
+      responseMimeType: "application/json"
     }
   };
 }
@@ -179,7 +177,59 @@ Your task:
 - Keep the visual language appropriate for a modern B2B SaaS marketing/product prototype.
 - The app renderer, not you, turns JSON into UI. Do not generate React, HTML, Markdown, or explanations.
 
-Return only valid JSON matching the provided schema.`;
+Return only valid JSON matching this exact contract:
+{
+  "featureName": string,
+  "overallConcept": string,
+  "inferredUser": string,
+  "inferredUserGoal": string,
+  "interpretationSummary": string,
+  "stageInterpretations": [
+    {
+      "stage": "Call to Adventure" | "Crossing the Threshold" | "Seizing the Sword" | "Hero's Reward",
+      "imageDescription": string,
+      "inferredMeaning": string,
+      "evidence": string[],
+      "assumptions": string[],
+      "uncertainty": string
+    }
+  ],
+  "prototype": {
+    "screens": [
+      {
+        "id": string,
+        "stage": "Call to Adventure" | "Crossing the Threshold" | "Seizing the Sword" | "Hero's Reward",
+        "title": string,
+        "subtitle": string,
+        "userState": string,
+        "primaryActionLabel": string,
+        "layoutType": "hero-dashboard" | "guided-workflow" | "action-center" | "outcome-summary",
+        "components": [
+          {
+            "type": "hero" | "panel" | "metric" | "steps" | "list" | "form" | "insight" | "confirmation" | "timeline",
+            "title": string,
+            "body": string,
+            "items": string[],
+            "label": string,
+            "value": string
+          }
+        ],
+        "transitionToNext": string
+      }
+    ]
+  },
+  "globalAssumptions": string[],
+  "missingInformation": string[],
+  "confidence": number
+}
+
+Hard requirements:
+- stageInterpretations must contain exactly four objects in the required stage order.
+- prototype.screens must contain exactly four screens in the required stage order.
+- Each screen must include 2 to 5 components.
+- Every component must include type, title, body, items, label, and value. Use an empty array for items when there are no items.
+- confidence must be a number from 0 to 1.
+- Return JSON only.`;
 }
 
 function safeParseJson(text: string): unknown | null {

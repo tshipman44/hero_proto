@@ -5,7 +5,7 @@ A GitHub-ready Next.js workshop tool that turns four wordless Hero's Journey pos
 - an AI interpretation bridge from visual metaphor to feature concept
 - a clickable responsive web prototype with exactly four screens
 
-The model returns structured JSON only. The app renders that JSON through fixed React components, so generated React/HTML is never executed.
+The model returns structured JSON only. The app validates the JSON server-side and renders it through fixed React components, so generated React/HTML is never executed.
 
 ## Stack
 
@@ -89,6 +89,7 @@ The app uses no database or persistent storage, so it fits the Vercel free tier 
 - Browser session storage has a quota, so previews are compressed and session-only.
 - The fallback prototype is intentionally generic and should be used for continuity, not as a real interpretation.
 - The app validates structure, but visual interpretation quality depends on the uploaded poster photos and model behavior.
+- Gemini is run in JSON mode and the app performs strict local validation. The full app schema is not sent as a constrained decoding schema because Gemini may reject complex nested schemas during serving.
 
 ## Future Enhancements
 
