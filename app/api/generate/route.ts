@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { createMockPrototypeSpec } from "@/lib/mockData";
 import {
   GeminiApiError,
@@ -8,6 +9,7 @@ import {
 } from "@/lib/gemini";
 import {
   GenerateRequestSchema,
+  repairPrototypeSpecInput,
   validatePrototypeSpec,
   type GenerationApiResult
 } from "@/lib/schema";
@@ -75,7 +77,8 @@ export async function POST(request: Request) {
 
     try {
       generation = await generatePrototypeFromGemini(input, apiKey);
-      const spec = validatePrototypeSpec(generation.rawJson);
+      const repairedJson = repairPrototypeSpecInput(generation.rawJson, input.featureName);
+      const spec = validatePrototypeSpec(repairedJson);
       const result: GenerationApiResult = {
         ok: true,
         mode: "live",
@@ -90,6 +93,8 @@ export async function POST(request: Request) {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Gemini generation failed.";
       const isBadJson =
+        error instanceof GeminiJsonError ||
+        error instanceof ZodError ||
         message.includes("JSON") ||
         message.includes("Stage interpretation") ||
         message.includes("Prototype screen");
@@ -118,7 +123,9 @@ export async function POST(request: Request) {
             : generation?.rawApiResponse,
         rawModelText:
           error instanceof GeminiJsonError ? error.rawModelText : generation?.rawModelText,
-        rawJson: generation?.rawJson || fallback
+        rawJson: generation?.rawJson || fallback,
+        validationErrors:
+          error instanceof ZodError ? error.issues.map((issue) => issue.message) : undefined
       };
       return NextResponse.json(result);
     }

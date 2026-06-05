@@ -22,6 +22,10 @@ const componentTypes = [
   "timeline"
 ] as const;
 
+const defaultLayoutTypes = [...layoutTypes];
+const allowedLayoutTypes = new Set<string>(layoutTypes);
+const allowedComponentTypes = new Set<string>(componentTypes);
+
 export const PrototypeComponentSchema = z
   .object({
     type: z.enum(componentTypes),
@@ -135,6 +139,128 @@ export function validatePrototypeSpec(input: unknown): PrototypeSpec {
   }
 
   return parsed;
+}
+
+export function repairPrototypeSpecInput(input: unknown, fallbackFeatureName: string): unknown {
+  if (!isRecord(input)) {
+    return input;
+  }
+
+  const stageInterpretations = Array.isArray(input.stageInterpretations)
+    ? input.stageInterpretations.slice(0, 4)
+    : [];
+  const prototype = isRecord(input.prototype) ? input.prototype : {};
+  const screens = Array.isArray(prototype.screens) ? prototype.screens.slice(0, 4) : [];
+
+  return {
+    featureName: asString(input.featureName, fallbackFeatureName),
+    overallConcept: asString(input.overallConcept, `${fallbackFeatureName} is inferred from the four poster stages.`),
+    inferredUser: asString(input.inferredUser, "A user inferred from the visual journey."),
+    inferredUserGoal: asString(input.inferredUserGoal, "Complete the journey represented by the posters."),
+    interpretationSummary: asString(
+      input.interpretationSummary,
+      "The posters are interpreted as a sequence from need to action to outcome."
+    ),
+    stageInterpretations: STAGE_NAMES.map((stage, index) =>
+      repairStageInterpretation(stageInterpretations[index], stage)
+    ),
+    prototype: {
+      screens: STAGE_NAMES.map((stage, index) => repairScreen(screens[index], stage, index))
+    },
+    globalAssumptions: asStringArray(input.globalAssumptions).slice(0, 8),
+    missingInformation: asStringArray(input.missingInformation).slice(0, 8),
+    confidence: asConfidence(input.confidence)
+  };
+}
+
+function repairStageInterpretation(input: unknown, stage: (typeof STAGE_NAMES)[number]) {
+  const record = isRecord(input) ? input : {};
+
+  return {
+    stage,
+    imageDescription: asString(record.imageDescription, "The poster has visible metaphorical cues for this stage."),
+    inferredMeaning: asString(
+      record.inferredMeaning,
+      `The ${stage} poster suggests a product moment in the user journey.`
+    ),
+    evidence: asStringArray(record.evidence, ["Visual symbols and composition suggest this stage's meaning."]).slice(
+      0,
+      6
+    ),
+    assumptions: asStringArray(record.assumptions).slice(0, 6),
+    uncertainty: asString(record.uncertainty, "Some meaning remains uncertain because the poster is wordless.")
+  };
+}
+
+function repairScreen(input: unknown, stage: (typeof STAGE_NAMES)[number], index: number) {
+  const record = isRecord(input) ? input : {};
+  const components = Array.isArray(record.components) ? record.components.slice(0, 5) : [];
+  const paddedComponents = components.length >= 2 ? components : [...components, ...Array(2 - components.length).fill(null)];
+
+  return {
+    id: asString(record.id, stage.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")),
+    stage,
+    title: asString(record.title, stage),
+    subtitle: asString(record.subtitle, "A focused prototype screen generated from the poster interpretation."),
+    userState: asString(record.userState, "The user is moving through this stage of the journey."),
+    primaryActionLabel: asString(record.primaryActionLabel, index === 3 ? "Replay the prototype" : "Continue"),
+    layoutType: allowedLayoutTypes.has(String(record.layoutType))
+      ? String(record.layoutType)
+      : defaultLayoutTypes[index],
+    components: paddedComponents.map((component, componentIndex) =>
+      repairComponent(component, componentIndex)
+    ),
+    transitionToNext: asString(record.transitionToNext, defaultTransition(index))
+  };
+}
+
+function repairComponent(input: unknown, index: number) {
+  const record = isRecord(input) ? input : {};
+
+  return {
+    type: allowedComponentTypes.has(String(record.type)) ? String(record.type) : index === 0 ? "hero" : "panel",
+    title: asString(record.title, index === 0 ? "Key moment" : "Supporting detail"),
+    body: asString(record.body, "This element supports the generated prototype screen."),
+    items: asStringArray(record.items).slice(0, 6),
+    label: asString(record.label, "Status"),
+    value: asString(record.value, "Ready")
+  };
+}
+
+function defaultTransition(index: number): string {
+  if (index >= STAGE_NAMES.length - 1) {
+    return "The journey can be replayed from the beginning for workshop discussion.";
+  }
+
+  return `The user moves from ${STAGE_NAMES[index]} to ${STAGE_NAMES[index + 1]}.`;
+}
+
+function asString(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+function asStringArray(value: unknown, fallback: string[] = []): string[] {
+  if (!Array.isArray(value)) {
+    return fallback;
+  }
+
+  const strings = value.filter(
+    (item): item is string => typeof item === "string" && Boolean(item.trim())
+  );
+  return strings.length ? strings.map((item) => item.trim()) : fallback;
+}
+
+function asConfidence(value: unknown): number {
+  const numeric = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(numeric)) {
+    return 0.6;
+  }
+
+  return Math.min(1, Math.max(0, numeric));
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
 const stringSchema = (description: string, maxLength?: number) => ({
