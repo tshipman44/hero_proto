@@ -93,6 +93,11 @@ export async function POST(request: Request) {
         message.includes("JSON") ||
         message.includes("Stage interpretation") ||
         message.includes("Prototype screen");
+      const isCredentialError =
+        error instanceof GeminiApiError && (error.statusCode === 401 || error.statusCode === 403);
+      const friendlyCredentialError = message.includes("reported as leaked")
+        ? "Gemini rejected the API key because Google has marked it as leaked. Create a new key in Google AI Studio and update GEMINI_API_KEY. A sample fallback is shown."
+        : `Gemini rejected the API key or project permissions. Check GEMINI_API_KEY and the selected model. A sample fallback is shown. ${message}`;
 
       const result: GenerationApiResult = {
         ok: false,
@@ -103,8 +108,10 @@ export async function POST(request: Request) {
         errorType: isBadJson ? "bad_json" : "api_failure",
         error: isBadJson
           ? `Gemini returned an invalid prototype spec. A sample fallback is shown. ${message}`
-          : `Gemini could not complete this request. A sample fallback is shown. ${message}`,
-        retryable: !isBadJson,
+          : isCredentialError
+            ? friendlyCredentialError
+            : `Gemini could not complete this request. A sample fallback is shown. ${message}`,
+        retryable: !isBadJson && !isCredentialError,
         rawApiResponse:
           error instanceof GeminiJsonError || error instanceof GeminiApiError
             ? error.rawApiResponse

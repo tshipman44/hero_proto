@@ -11,11 +11,13 @@ export type GeminiGenerationResult = {
 
 export class GeminiApiError extends Error {
   rawApiResponse?: unknown;
+  statusCode?: number;
 
-  constructor(message: string, rawApiResponse?: unknown) {
+  constructor(message: string, rawApiResponse?: unknown, statusCode?: number) {
     super(message);
     this.name = "GeminiApiError";
     this.rawApiResponse = rawApiResponse;
+    this.statusCode = statusCode;
   }
 }
 
@@ -64,7 +66,11 @@ export async function generatePrototypeFromGemini(
         typeof rawApiResponse === "object" && rawApiResponse && "error" in rawApiResponse
           ? JSON.stringify((rawApiResponse as { error: unknown }).error)
           : rawText;
-      throw new GeminiApiError(`Gemini API returned ${response.status}: ${message}`, rawApiResponse);
+      throw new GeminiApiError(
+        `Gemini API returned ${response.status}: ${message}`,
+        rawApiResponse,
+        response.status
+      );
     }
 
     const rawModelText = extractModelText(rawApiResponse);
@@ -138,12 +144,8 @@ function buildGeminiRequest(input: GenerateRequest) {
     generationConfig: {
       temperature: 0.35,
       maxOutputTokens: 8192,
-      responseFormat: {
-        text: {
-          mimeType: "application/json",
-          schema: GEMINI_RESPONSE_JSON_SCHEMA
-        }
-      }
+      responseMimeType: "application/json",
+      responseJsonSchema: GEMINI_RESPONSE_JSON_SCHEMA
     }
   };
 }
