@@ -15,7 +15,8 @@ The model returns structured JSON only. The app validates the JSON server-side a
 - Plain CSS in `app/globals.css`
 - Zod runtime validation
 - Google Gemini REST API via `app/api/generate/route.ts`
-- No database, auth, or permanent file storage
+- Private Vercel Blob storage for generated prototype submissions
+- No database or user accounts
 
 ## Local Setup
 
@@ -40,13 +41,31 @@ npm.cmd run dev
 GEMINI_API_KEY=your_google_ai_studio_key
 GEMINI_MODEL=gemini-2.5-flash
 MOCK_GEMINI=false
+ADMIN_URL_KEY=replace-with-a-long-random-value
+BLOB_READ_WRITE_TOKEN=added_by_vercel
 ```
 
 - `GEMINI_API_KEY` is required for live Gemini calls.
 - `GEMINI_MODEL` is optional. The default is `gemini-2.5-flash`.
 - `MOCK_GEMINI=true` runs the full UI with a realistic hardcoded prototype and no API key.
+- `ADMIN_URL_KEY` is the private, URL-safe key used for the facilitator gallery route.
+- `BLOB_READ_WRITE_TOKEN` is added automatically after connecting a private Vercel Blob store.
 
 The API key is read only in the server route and is never exposed to the client.
+
+## Facilitator Submission Gallery
+
+Every successful live or mock generation is saved automatically as an immutable JSON document. The saved submission contains the generated interpretation and four-screen prototype, but not the uploaded poster photos or raw Gemini response.
+
+Open the facilitator gallery at:
+
+```text
+/admin/<ADMIN_URL_KEY>
+```
+
+The gallery is read-only and lists submissions by feature name and timestamp. The URL is excluded from search indexing, but it is not a substitute for authenticated access: anyone who knows the complete URL can open it.
+
+For local development, submissions are written to `.data/submissions`, and the default gallery URL is `/admin/local-admin` when `ADMIN_URL_KEY` is omitted.
 
 ## Workshop Flow
 
@@ -78,10 +97,12 @@ The upload flow still requires four images so the workshop behavior remains real
 1. Push this project to GitHub.
 2. Import the repo into Vercel.
 3. Add `GEMINI_API_KEY` in Project Settings -> Environment Variables.
-4. Optionally set `GEMINI_MODEL`.
-5. Deploy.
+4. Create a private Vercel Blob store and connect it to the project.
+5. Add a long, URL-safe `ADMIN_URL_KEY` in Project Settings -> Environment Variables.
+6. Optionally set `GEMINI_MODEL`.
+7. Deploy.
 
-The app uses no database or persistent storage, so it fits the Vercel free tier for typical workshop traffic.
+The app uses private Blob storage rather than a database and is designed for typical workshop-scale traffic.
 
 ## Known Limitations
 

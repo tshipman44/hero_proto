@@ -13,6 +13,7 @@ import {
   validatePrototypeSpec,
   type GenerationApiResult
 } from "@/lib/schema";
+import { saveSubmission } from "@/lib/submissions";
 
 export const runtime = "nodejs";
 
@@ -46,13 +47,15 @@ export async function POST(request: Request) {
     const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
     if (mockMode) {
+      const submission = await saveGeneratedPrototype(fallback);
       const result: GenerationApiResult = {
         ok: true,
         mode: "mock",
         data: fallback,
         model: "mock",
         durationMs: Date.now() - startedAt,
-        rawJson: fallback
+        rawJson: fallback,
+        submission
       };
       return NextResponse.json(result);
     }
@@ -79,6 +82,7 @@ export async function POST(request: Request) {
       generation = await generatePrototypeFromGemini(input, apiKey);
       const repairedJson = repairPrototypeSpecInput(generation.rawJson, input.featureName);
       const spec = validatePrototypeSpec(repairedJson);
+      const submission = await saveGeneratedPrototype(spec);
       const result: GenerationApiResult = {
         ok: true,
         mode: "live",
@@ -87,7 +91,8 @@ export async function POST(request: Request) {
         durationMs: Date.now() - startedAt,
         rawApiResponse: generation.rawApiResponse,
         rawModelText: generation.rawModelText,
-        rawJson: generation.rawJson
+        rawJson: generation.rawJson,
+        submission
       };
       return NextResponse.json(result);
     } catch (error) {
@@ -143,5 +148,25 @@ export async function POST(request: Request) {
       rawJson: fallback
     };
     return NextResponse.json(result, { status: 500 });
+  }
+}
+
+async function saveGeneratedPrototype(
+  prototype: GenerationApiResult["data"]
+): Promise<NonNullable<GenerationApiResult["submission"]>> {
+  try {
+    const submission = await saveSubmission(prototype);
+    return {
+      status: "saved",
+      id: submission.id,
+      createdAt: submission.createdAt
+    };
+  } catch (error) {
+    console.error("Generated prototype could not be saved for the admin gallery.", error);
+    return {
+      status: "failed",
+      error:
+        "The prototype is still available in this browser, but it could not be saved for the facilitator. Please let the facilitator know."
+    };
   }
 }

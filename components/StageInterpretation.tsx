@@ -8,10 +8,12 @@ type StageInterpretationProps = {
 
 export default function StageInterpretation({ interpretation, poster }: StageInterpretationProps) {
   return (
-    <article className="interpretation-card">
-      <div className="interpretation-image">
-        {poster ? <img alt={`${interpretation.stage} poster thumbnail`} src={poster.dataUrl} /> : null}
-      </div>
+    <article className={poster ? "interpretation-card" : "interpretation-card without-poster"}>
+      {poster ? (
+        <div className="interpretation-image">
+          <img alt={`${interpretation.stage} poster thumbnail`} src={poster.dataUrl} />
+        </div>
+      ) : null}
       <div className="interpretation-body">
         <span className="stage-pill">{interpretation.stage}</span>
         <h3>{interpretation.inferredMeaning}</h3>
