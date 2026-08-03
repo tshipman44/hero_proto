@@ -118,6 +118,12 @@ export type GenerationApiResult = {
   rawModelText?: string;
   rawJson?: unknown;
   validationErrors?: string[];
+  submission?: {
+    status: "saved" | "failed";
+    id?: string;
+    createdAt?: string;
+    error?: string;
+  };
 };
 
 export function validatePrototypeSpec(input: unknown): PrototypeSpec {
