@@ -35,7 +35,7 @@ export const STAGES: Array<{
     id: "heros-reward",
     name: "Hero's Reward",
     shortName: "Reward",
-    hint: "User receives value, outcome, confidence, approval, insight, or completion."
+    hint: "User receives value, outcome, confidence, or completion."
   }
 ];
 
