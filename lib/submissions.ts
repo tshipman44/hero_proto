@@ -157,10 +157,10 @@ function localPath(id: string): string {
 }
 
 function hasBlobStorage(): boolean {
-  return Boolean(
-    process.env.BLOB_READ_WRITE_TOKEN ||
-      (process.env.VERCEL_OIDC_TOKEN && process.env.BLOB_STORE_ID)
-  );
+  // Vercel's current Blob integration injects the store ID as a project
+  // variable and supplies its short-lived OIDC token through the request
+  // context. The token therefore does not have to exist as a static env var.
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 }
 
 function assertLocalStorageAvailable(): void {
