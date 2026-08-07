@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1080" viewBox="0 0 1440 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Results dashboard wireframe</title>
+  <desc id="desc">A focused results page with one explanation dashboard followed by one clickable sample wireframe.</desc>
+  <rect width="1440" height="1080" fill="#f5f7fa"/>
+
+  <!-- Page heading -->
+  <text x="100" y="74" fill="#0f766e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.5">CONCEPT RECOMMENDATION</text>
+  <text x="100" y="124" fill="#111827" font-family="Arial, sans-serif" font-size="42" font-weight="700">Signal Brief</text>
+  <text x="100" y="157" fill="#64748b" font-family="Arial, sans-serif" font-size="18">One clear explanation, followed by a clickable sample.</text>
+  <rect x="1190" y="90" width="150" height="44" rx="22" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="1265" y="118" fill="#111827" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="middle">Start over</text>
+
+  <!-- Explanation dashboard -->
+  <rect x="100" y="205" width="1240" height="418" rx="14" fill="#ffffff" stroke="#dbe3ea"/>
+  <text x="132" y="245" fill="#0f766e" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.2">THE IDEA IN ONE VIEW</text>
+  <text x="132" y="286" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Turn scattered signals into one confident next step.</text>
+  <rect x="1168" y="235" width="140" height="34" rx="17" fill="#eef6f4"/>
+  <text x="1238" y="257" fill="#0f766e" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">81% confidence</text>
+
+  <line x1="100" y1="318" x2="1340" y2="318" stroke="#dbe3ea"/>
+  <line x1="513" y1="318" x2="513" y2="440" stroke="#dbe3ea"/>
+  <line x1="926" y1="318" x2="926" y2="440" stroke="#dbe3ea"/>
+  <text x="132" y="351" fill="#64748b" font-family="Arial, sans-serif" font-size="12" font-weight="700">WHO IT IS FOR</text>
+  <text x="132" y="382" fill="#334155" font-family="Arial, sans-serif" font-size="16">Busy product and account leads</text>
+  <text x="132" y="408" fill="#334155" font-family="Arial, sans-serif" font-size="16">sorting through scattered inputs.</text>
+  <text x="545" y="351" fill="#64748b" font-family="Arial, sans-serif" font-size="12" font-weight="700">WHAT THEY NEED</text>
+  <text x="545" y="382" fill="#334155" font-family="Arial, sans-serif" font-size="16">A clear, shareable decision without</text>
+  <text x="545" y="408" fill="#334155" font-family="Arial, sans-serif" font-size="16">assembling every clue manually.</text>
+  <text x="958" y="351" fill="#64748b" font-family="Arial, sans-serif" font-size="12" font-weight="700">HOW IT HELPS</text>
+  <text x="958" y="382" fill="#334155" font-family="Arial, sans-serif" font-size="16">Guides the user from ambiguity</text>
+  <text x="958" y="408" fill="#334155" font-family="Arial, sans-serif" font-size="16">to a recommended action.</text>
+
+  <line x1="100" y1="440" x2="1340" y2="440" stroke="#dbe3ea"/>
+  <g font-family="Arial, sans-serif">
+    <circle cx="150" cy="492" r="17" fill="#eaf0ff"/><text x="150" y="497" fill="#2454d6" font-size="13" font-weight="700" text-anchor="middle">1</text>
+    <text x="180" y="485" fill="#111827" font-size="14" font-weight="700">Notice</text><text x="180" y="509" fill="#64748b" font-size="13">Surface the signal</text>
+    <line x1="350" y1="476" x2="350" y2="524" stroke="#dbe3ea"/>
+    <circle cx="398" cy="492" r="17" fill="#eaf0ff"/><text x="398" y="497" fill="#2454d6" font-size="13" font-weight="700" text-anchor="middle">2</text>
+    <text x="428" y="485" fill="#111827" font-size="14" font-weight="700">Clarify</text><text x="428" y="509" fill="#64748b" font-size="13">Confirm the context</text>
+    <line x1="660" y1="476" x2="660" y2="524" stroke="#dbe3ea"/>
+    <circle cx="708" cy="492" r="17" fill="#eaf0ff"/><text x="708" y="497" fill="#2454d6" font-size="13" font-weight="700" text-anchor="middle">3</text>
+    <text x="738" y="485" fill="#111827" font-size="14" font-weight="700">Decide</text><text x="738" y="509" fill="#64748b" font-size="13">Choose the next move</text>
+    <line x1="970" y1="476" x2="970" y2="524" stroke="#dbe3ea"/>
+    <circle cx="1018" cy="492" r="17" fill="#eaf0ff"/><text x="1018" y="497" fill="#2454d6" font-size="13" font-weight="700" text-anchor="middle">4</text>
+    <text x="1048" y="485" fill="#111827" font-size="14" font-weight="700">Share</text><text x="1048" y="509" fill="#64748b" font-size="13">Leave with a brief</text>
+  </g>
+  <rect x="100" y="550" width="1240" height="73" rx="0 0 14 14" fill="#f8fafc"/>
+  <text x="132" y="593" fill="#334155" font-family="Arial, sans-serif" font-size="14" font-weight="700">›  Review assumptions and open questions</text>
+
+  <!-- Sample wireframe -->
+  <text x="100" y="690" fill="#0f766e" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.2">SAMPLE WIREFRAME</text>
+  <text x="100" y="727" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">See the idea in action</text>
+  <text x="1340" y="724" fill="#64748b" font-family="Arial, sans-serif" font-size="15" text-anchor="end">Use the steps to move through the proposed experience.</text>
+
+  <rect x="100" y="755" width="1240" height="269" rx="14" fill="#ffffff" stroke="#dbe3ea"/>
+  <rect x="124" y="775" width="154" height="34" rx="17" fill="#eaf0ff" stroke="#9eb5f5"/>
+  <text x="201" y="797" fill="#2454d6" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">1  Notice</text>
+  <rect x="288" y="775" width="154" height="34" rx="17" fill="#f8fafc" stroke="#dbe3ea"/>
+  <text x="365" y="797" fill="#64748b" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">2  Clarify</text>
+  <rect x="452" y="775" width="154" height="34" rx="17" fill="#f8fafc" stroke="#dbe3ea"/>
+  <text x="529" y="797" fill="#64748b" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">3  Decide</text>
+  <rect x="616" y="775" width="154" height="34" rx="17" fill="#f8fafc" stroke="#dbe3ea"/>
+  <text x="693" y="797" fill="#64748b" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">4  Share</text>
+  <rect x="1180" y="775" width="68" height="34" rx="17" fill="#ffffff" stroke="#dbe3ea"/><text x="1214" y="797" fill="#64748b" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Back</text>
+  <rect x="1258" y="775" width="58" height="34" rx="17" fill="#ffffff" stroke="#dbe3ea"/><text x="1287" y="797" fill="#111827" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Next</text>
+  <line x1="100" y1="827" x2="1340" y2="827" stroke="#dbe3ea"/>
+
+  <text x="140" y="864" fill="#0f766e" font-family="Arial, sans-serif" font-size="12" font-weight="700">1. NOTICE</text>
+  <text x="140" y="903" fill="#111827" font-family="Arial, sans-serif" font-size="27" font-weight="700">A signal needs attention</text>
+  <text x="140" y="932" fill="#64748b" font-family="Arial, sans-serif" font-size="15">Start with one clear reason to act.</text>
+  <rect x="140" y="954" width="156" height="42" rx="21" fill="#2454d6"/>
+  <text x="218" y="980" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700" text-anchor="middle">Review the signal</text>
+
+  <rect x="665" y="854" width="290" height="142" rx="10" fill="#f8fafc" stroke="#dbe3ea"/>
+  <text x="689" y="881" fill="#64748b" font-family="Arial, sans-serif" font-size="11" font-weight="700">STATUS</text>
+  <text x="689" y="912" fill="#111827" font-family="Arial, sans-serif" font-size="18" font-weight="700">Priority signal detected</text>
+  <line x1="689" y1="935" x2="925" y2="935" stroke="#cbd5e1" stroke-width="8"/>
+  <line x1="689" y1="959" x2="867" y2="959" stroke="#e2e8f0" stroke-width="8"/>
+  <rect x="975" y="854" width="160" height="142" rx="10" fill="#f8fafc" stroke="#dbe3ea"/>
+  <text x="999" y="881" fill="#64748b" font-family="Arial, sans-serif" font-size="11" font-weight="700">CONFIDENCE</text>
+  <text x="999" y="927" fill="#111827" font-family="Arial, sans-serif" font-size="30" font-weight="700">42%</text>
+  <rect x="1155" y="854" width="160" height="142" rx="10" fill="#f8fafc" stroke="#dbe3ea"/>
+  <text x="1179" y="881" fill="#64748b" font-family="Arial, sans-serif" font-size="11" font-weight="700">INPUTS</text>
+  <circle cx="1185" cy="911" r="4" fill="#2454d6"/><line x1="1198" y1="911" x2="1285" y2="911" stroke="#cbd5e1" stroke-width="7"/>
+  <circle cx="1185" cy="938" r="4" fill="#2454d6"/><line x1="1198" y1="938" x2="1260" y2="938" stroke="#cbd5e1" stroke-width="7"/>
+  <circle cx="1185" cy="965" r="4" fill="#2454d6"/><line x1="1198" y1="965" x2="1275" y2="965" stroke="#cbd5e1" stroke-width="7"/>
+</svg>
