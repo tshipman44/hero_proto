@@ -173,22 +173,26 @@ function localPath(id: string): string {
 
 type BlobCredentials =
   | { token: string }
-  | { oidcToken: string; storeId: string };
+  | { storeId: string };
 
 function getBlobCredentials(): BlobCredentials | null {
   const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
 
-  // Pass the read-write token explicitly when it is available. The Blob SDK
-  // otherwise prefers ambient Vercel OIDC credentials, which can point at a
-  // different store when a deployment has a stale BLOB_STORE_ID value.
+  // A read-write token remains useful for local development and older Blob
+  // integrations. Prefer it when one has explicitly been provided.
   if (token) {
     return { token };
   }
 
-  const oidcToken = process.env.VERCEL_OIDC_TOKEN?.trim();
   const storeId = process.env.BLOB_STORE_ID?.trim();
 
-  return oidcToken && storeId ? { oidcToken, storeId } : null;
+  // Current Vercel Blob integrations expose the selected store ID and provide
+  // the deployment's short-lived OIDC credential to the SDK automatically.
+  // Do not require VERCEL_OIDC_TOKEN to be present in process.env here: doing
+  // so incorrectly disables a connected store before the SDK can resolve its
+  // ambient credential. BLOB_WEBHOOK_PUBLIC_KEY is only for verifying client
+  // upload callbacks and is not an authorization credential for these calls.
+  return storeId ? { storeId } : null;
 }
 
 function assertLocalStorageAvailable(): void {
