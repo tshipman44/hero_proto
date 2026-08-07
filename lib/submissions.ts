@@ -35,8 +35,11 @@ export async function saveSubmission(prototype: PrototypeSpec): Promise<StoredSu
 
   const serializedSubmission = JSON.stringify(submission);
 
-  if (hasBlobStorage()) {
+  const credentials = getBlobCredentials();
+
+  if (credentials) {
     await put(blobPath(submission.id), serializedSubmission, {
+      ...credentials,
       access: "private",
       addRandomSuffix: false,
       contentType: "application/json",
@@ -55,8 +58,9 @@ export async function saveSubmission(prototype: PrototypeSpec): Promise<StoredSu
 }
 
 export async function listSubmissionSummaries(): Promise<SubmissionSummary[]> {
-  const submissions = hasBlobStorage()
-    ? await listBlobSubmissions()
+  const credentials = getBlobCredentials();
+  const submissions = credentials
+    ? await listBlobSubmissions(credentials)
     : await listLocalSubmissions();
 
   return submissions
@@ -69,8 +73,14 @@ export async function getSubmission(id: string): Promise<StoredSubmission | null
     return null;
   }
 
-  if (hasBlobStorage()) {
-    const blob = await get(blobPath(id), { access: "private", useCache: false });
+  const credentials = getBlobCredentials();
+
+  if (credentials) {
+    const blob = await get(blobPath(id), {
+      ...credentials,
+      access: "private",
+      useCache: false
+    });
 
     if (!blob || blob.statusCode !== 200) {
       return null;
@@ -92,15 +102,20 @@ export async function getSubmission(id: string): Promise<StoredSubmission | null
   }
 }
 
-async function listBlobSubmissions(): Promise<StoredSubmission[]> {
+async function listBlobSubmissions(credentials: BlobCredentials): Promise<StoredSubmission[]> {
   const result = await list({
+    ...credentials,
     prefix: SUBMISSION_PREFIX,
     limit: MAX_LISTED_SUBMISSIONS
   });
 
   const settled = await Promise.allSettled(
     result.blobs.map(async (blob) => {
-      const storedBlob = await get(blob.pathname, { access: "private", useCache: false });
+      const storedBlob = await get(blob.pathname, {
+        ...credentials,
+        access: "private",
+        useCache: false
+      });
 
       if (!storedBlob || storedBlob.statusCode !== 200) {
         return null;
@@ -156,11 +171,24 @@ function localPath(id: string): string {
   return path.join(LOCAL_SUBMISSION_DIRECTORY, `${id}.json`);
 }
 
-function hasBlobStorage(): boolean {
-  return Boolean(
-    process.env.BLOB_READ_WRITE_TOKEN ||
-      (process.env.VERCEL_OIDC_TOKEN && process.env.BLOB_STORE_ID)
-  );
+type BlobCredentials =
+  | { token: string }
+  | { oidcToken: string; storeId: string };
+
+function getBlobCredentials(): BlobCredentials | null {
+  const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
+
+  // Pass the read-write token explicitly when it is available. The Blob SDK
+  // otherwise prefers ambient Vercel OIDC credentials, which can point at a
+  // different store when a deployment has a stale BLOB_STORE_ID value.
+  if (token) {
+    return { token };
+  }
+
+  const oidcToken = process.env.VERCEL_OIDC_TOKEN?.trim();
+  const storeId = process.env.BLOB_STORE_ID?.trim();
+
+  return oidcToken && storeId ? { oidcToken, storeId } : null;
 }
 
 function assertLocalStorageAvailable(): void {
