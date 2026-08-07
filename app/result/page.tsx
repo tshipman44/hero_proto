@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import DebugPanel from "@/components/DebugPanel";
 import GeneratedResultContent from "@/components/GeneratedResultContent";
-import PosterStrip from "@/components/PosterStrip";
 import { RESULT_SESSION_KEY, UPLOAD_SESSION_KEY } from "@/lib/constants";
 import type { PosterImage } from "@/lib/imageUtils";
 import { readSessionValue, removeSessionValues } from "@/lib/session";
@@ -67,9 +65,9 @@ export default function ResultPage() {
     <main className="page-shell result-shell">
       <section className="result-heading">
         <div>
-          <p className="eyebrow">Generated workshop result</p>
+          <p className="eyebrow">Concept recommendation</p>
           <h1>{spec.featureName || request.featureName}</h1>
-          <p>{spec.interpretationSummary}</p>
+          <p>One clear explanation, followed by a clickable sample.</p>
         </div>
         <button className="button button-secondary" type="button" onClick={handleStartOver}>
           Start Over
@@ -97,30 +95,7 @@ export default function ResultPage() {
         </section>
       ) : null}
 
-      <section className="meta-row" aria-label="Generation details">
-        <div>
-          <span>Mode</span>
-          <strong>{response.mode}</strong>
-        </div>
-        <div>
-          <span>Model</span>
-          <strong>{response.model}</strong>
-        </div>
-        <div>
-          <span>Duration</span>
-          <strong>{response.durationMs} ms</strong>
-        </div>
-        <div>
-          <span>Confidence</span>
-          <strong>{Math.round(spec.confidence * 100)}%</strong>
-        </div>
-      </section>
-
-      <PosterStrip images={request.images} />
-
-      <GeneratedResultContent posters={request.images} spec={spec} />
-
-      <DebugPanel response={response} />
+      <GeneratedResultContent spec={spec} />
     </main>
   );
 }
