@@ -42,14 +42,16 @@ GEMINI_API_KEY=your_google_ai_studio_key
 GEMINI_MODEL=gemini-2.5-flash
 MOCK_GEMINI=false
 ADMIN_URL_KEY=replace-with-a-long-random-value
-BLOB_READ_WRITE_TOKEN=added_by_vercel
+BLOB_STORE_ID=added_by_vercel
+BLOB_WEBHOOK_PUBLIC_KEY=added_by_vercel
 ```
 
 - `GEMINI_API_KEY` is required for live Gemini calls.
 - `GEMINI_MODEL` is optional. The default is `gemini-2.5-flash`.
 - `MOCK_GEMINI=true` runs the full UI with a realistic hardcoded prototype and no API key.
 - `ADMIN_URL_KEY` is the private, URL-safe key used for the facilitator gallery route.
-- `BLOB_READ_WRITE_TOKEN` is added automatically after connecting a private Vercel Blob store.
+- `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` are added automatically after connecting a private Vercel Blob store. On Vercel, the Blob SDK uses the deployment's ambient OIDC credential; `BLOB_WEBHOOK_PUBLIC_KEY` is reserved for verifying client-upload callbacks.
+- `BLOB_READ_WRITE_TOKEN` can still be set for local development or older Blob integrations.
 
 The API key is read only in the server route and is never exposed to the client.
 
