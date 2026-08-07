@@ -142,7 +142,10 @@ function buildGeminiRequest(input: GenerateRequest) {
     ],
     generationConfig: {
       temperature: 0.35,
-      maxOutputTokens: 8192,
+      maxOutputTokens: 12_000,
+      thinkingConfig: {
+        thinkingBudget: 1_024
+      },
       responseMimeType: "application/json"
     }
   };
