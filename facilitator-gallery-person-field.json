@@ -1,0 +1,251 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/v2/tile-formatting.schema.json",
+  "height": 350,
+  "width": 330,
+  "hideSelection": true,
+  "fillHorizontally": true,
+  "formatter": {
+    "elmType": "div",
+    "style": {
+      "display": "flex",
+      "align-items": "stretch",
+      "padding": "7px",
+      "margin-bottom": "10px",
+      "min-width": "290px",
+      "flex-grow": "1"
+    },
+    "children": [
+      {
+        "elmType": "div",
+        "style": {
+          "display": "flex",
+          "flex-direction": "column",
+          "width": "100%",
+          "height": "100%",
+          "padding": "18px",
+          "background-color": "#ffffff",
+          "border-radius": "16px 16px 16px 5px",
+          "border": "1px solid #dce2e5",
+          "box-shadow": "0 3px 16px rgba(16,30,59,0.10)",
+          "overflow": "hidden"
+        },
+        "children": [
+          {
+            "elmType": "div",
+            "style": {
+              "display": "flex",
+              "align-items": "center"
+            },
+            "children": [
+              {
+                "elmType": "img",
+                "attributes": {
+                  "src": "=getUserImage([$Employee.email], 'M')",
+                  "alt": "='Portrait of ' + [$Employee.title]"
+                },
+                "defaultHoverField": "[$Employee]",
+                "style": {
+                  "display": "=if([$Employee.email] == '', 'none', '')",
+                  "width": "76px",
+                  "height": "76px",
+                  "border-radius": "50%",
+                  "object-fit": "cover",
+                  "border": "3px solid #edf2f4",
+                  "margin-right": "14px"
+                }
+              },
+              {
+                "elmType": "div",
+                "style": {
+                  "display": "=if([$Employee.email] == '', 'flex', 'none')",
+                  "align-items": "center",
+                  "justify-content": "center",
+                  "width": "76px",
+                  "height": "76px",
+                  "border-radius": "50%",
+                  "background-color": "#dce9ea",
+                  "color": "#173d78",
+                  "font-size": "26px",
+                  "font-weight": "700",
+                  "margin-right": "14px"
+                },
+                "txtContent": "=substring([$Title],0,1)"
+              },
+              {
+                "elmType": "div",
+                "style": {
+                  "min-width": "0",
+                  "flex-grow": "1"
+                },
+                "children": [
+                  {
+                    "elmType": "div",
+                    "style": {
+                      "font-size": "20px",
+                      "font-weight": "600",
+                      "color": "#101e3b",
+                      "white-space": "nowrap",
+                      "overflow": "hidden",
+                      "text-overflow": "ellipsis"
+                    },
+                    "txtContent": "=if([$Employee.title] == '', [$Title], [$Employee.title])"
+                  },
+                  {
+                    "elmType": "div",
+                    "style": {
+                      "font-size": "11px",
+                      "line-height": "1.4",
+                      "color": "#4a566d",
+                      "margin-top": "4px"
+                    },
+                    "txtContent": "[$Role]"
+                  },
+                  {
+                    "elmType": "div",
+                    "style": {
+                      "display": "flex",
+                      "align-items": "center",
+                      "font-size": "10px",
+                      "color": "#667287",
+                      "margin-top": "7px"
+                    },
+                    "children": [
+                      {
+                        "elmType": "span",
+                        "attributes": {
+                          "iconName": "POI"
+                        },
+                        "style": {
+                          "font-size": "12px",
+                          "margin-right": "4px"
+                        }
+                      },
+                      {
+                        "elmType": "span",
+                        "txtContent": "[$Location]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "elmType": "div",
+            "style": {
+              "display": "inline-flex",
+              "align-items": "center",
+              "align-self": "flex-start",
+              "padding": "5px 9px",
+              "border-radius": "999px",
+              "margin-top": "15px",
+              "font-size": "10px",
+              "font-weight": "700",
+              "color": "=if([$Availability] == 'Available this week', '#246153', if([$Availability] == 'Available next week', '#245d72', '#74551f'))",
+              "background-color": "=if([$Availability] == 'Available this week', '#e6f4ef', if([$Availability] == 'Available next week', '#e7f2f5', '#fff3db'))"
+            },
+            "children": [
+              {
+                "elmType": "span",
+                "attributes": {
+                  "iconName": "CircleFill"
+                },
+                "style": {
+                  "font-size": "7px",
+                  "margin-right": "5px"
+                }
+              },
+              {
+                "elmType": "span",
+                "txtContent": "[$Availability]"
+              }
+            ]
+          },
+          {
+            "elmType": "div",
+            "style": {
+              "display": "flex",
+              "gap": "6px",
+              "margin-top": "13px"
+            },
+            "children": [
+              {
+                "elmType": "span",
+                "style": {
+                  "padding": "5px 8px",
+                  "border-radius": "999px",
+                  "background-color": "#edf3f4",
+                  "color": "#31586d",
+                  "font-size": "9px",
+                  "font-weight": "600"
+                },
+                "txtContent": "[$Specialty1]"
+              },
+              {
+                "elmType": "span",
+                "style": {
+                  "padding": "5px 8px",
+                  "border-radius": "999px",
+                  "background-color": "#edf3f4",
+                  "color": "#31586d",
+                  "font-size": "9px",
+                  "font-weight": "600"
+                },
+                "txtContent": "[$Specialty2]"
+              }
+            ]
+          },
+          {
+            "elmType": "div",
+            "style": {
+              "font-size": "11px",
+              "line-height": "1.5",
+              "color": "#4a566d",
+              "height": "49px",
+              "overflow": "hidden",
+              "margin-top": "13px"
+            },
+            "txtContent": "[$ProfileSummary]"
+          },
+          {
+            "elmType": "button",
+            "customRowAction": {
+              "action": "defaultClick"
+            },
+            "style": {
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "width": "100%",
+              "height": "36px",
+              "margin-top": "auto",
+              "border": "0",
+              "border-radius": "999px",
+              "background-color": "#173d78",
+              "color": "#ffffff",
+              "font-size": "11px",
+              "font-weight": "700",
+              "cursor": "pointer"
+            },
+            "children": [
+              {
+                "elmType": "span",
+                "txtContent": "View profile"
+              },
+              {
+                "elmType": "span",
+                "attributes": {
+                  "iconName": "ChevronRight"
+                },
+                "style": {
+                  "font-size": "13px",
+                  "margin-left": "6px"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

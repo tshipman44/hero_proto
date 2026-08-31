@@ -1,0 +1,13 @@
+Title,DistrictCode,Territory,FacilitatorCount,AccentColor,Summary
+Boston,District 01,New England,2,#96977E,Facilitation support across New England
+New York,District 02,New York and Northern New Jersey,3,#7B8493,Facilitation support across New York and Northern New Jersey
+Philadelphia,District 03,Eastern Pennsylvania and Delaware,2,#8D9FAF,Facilitation support across Eastern Pennsylvania and Delaware
+Cleveland,District 04,Ohio and Western Pennsylvania,2,#82929F,Facilitation support across Ohio and Western Pennsylvania
+Richmond,District 05,Mid-Atlantic,2,#D99B45,Facilitation support across the Mid-Atlantic
+Atlanta,District 06,Southeast,3,#9F7065,Facilitation support across the Southeast
+Chicago,District 07,Great Lakes,2,#7791B6,Facilitation support across the Great Lakes
+St. Louis,District 08,Mid-South,2,#A9AD82,Facilitation support across the Mid-South
+Minneapolis,District 09,Upper Midwest,2,#748F8E,Facilitation support across the Upper Midwest
+Kansas City,District 10,Central Plains,2,#DBA760,Facilitation support across the Central Plains
+Dallas,District 11,Southwest,2,#769496,Facilitation support across the Southwest
+San Francisco,District 12,West,3,#858D9C,Facilitation support across the West

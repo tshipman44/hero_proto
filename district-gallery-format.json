@@ -1,0 +1,171 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/v2/tile-formatting.schema.json",
+  "height": 176,
+  "width": 248,
+  "hideSelection": false,
+  "fillHorizontally": true,
+  "formatter": {
+    "elmType": "div",
+    "style": {
+      "display": "flex",
+      "align-items": "stretch",
+      "padding": "6px",
+      "margin-bottom": "8px",
+      "min-width": "210px",
+      "flex-grow": "1"
+    },
+    "children": [
+      {
+        "elmType": "div",
+        "style": {
+          "display": "flex",
+          "flex-direction": "column",
+          "width": "100%",
+          "height": "100%",
+          "padding": "16px",
+          "background-color": "#ffffff",
+          "border-radius": "14px 14px 14px 4px",
+          "border-top": "='7px solid ' + [$AccentColor]",
+          "box-shadow": "0 2px 12px rgba(16,30,59,0.12)",
+          "overflow": "hidden",
+          "cursor": "pointer"
+        },
+        "customCardProps": {
+          "openOnEvent": "hover",
+          "directionalHint": "bottomCenter",
+          "isBeakVisible": true,
+          "formatter": {
+            "elmType": "div",
+            "style": {
+              "width": "280px",
+              "padding": "16px",
+              "background-color": "#ffffff",
+              "color": "#101e3b"
+            },
+            "children": [
+              {
+                "elmType": "div",
+                "style": {
+                  "font-size": "11px",
+                  "font-weight": "700",
+                  "letter-spacing": "1px",
+                  "color": "#087d83",
+                  "text-transform": "uppercase"
+                },
+                "txtContent": "[$DistrictCode]"
+              },
+              {
+                "elmType": "div",
+                "style": {
+                  "font-size": "20px",
+                  "font-weight": "600",
+                  "margin-top": "4px"
+                },
+                "txtContent": "[$Title]"
+              },
+              {
+                "elmType": "div",
+                "style": {
+                  "font-size": "13px",
+                  "line-height": "1.5",
+                  "color": "#4a566d",
+                  "margin-top": "8px"
+                },
+                "txtContent": "[$Summary]"
+              },
+              {
+                "elmType": "div",
+                "style": {
+                  "font-size": "12px",
+                  "font-weight": "600",
+                  "color": "#173d78",
+                  "margin-top": "12px"
+                },
+                "txtContent": "=[$FacilitatorCount] + if([$FacilitatorCount] == 1, ' facilitator', ' facilitators')"
+              }
+            ]
+          }
+        },
+        "children": [
+          {
+            "elmType": "div",
+            "style": {
+              "font-size": "10px",
+              "font-weight": "700",
+              "letter-spacing": "1px",
+              "color": "#087d83",
+              "text-transform": "uppercase"
+            },
+            "txtContent": "[$DistrictCode]"
+          },
+          {
+            "elmType": "div",
+            "style": {
+              "font-size": "22px",
+              "font-weight": "600",
+              "color": "#101e3b",
+              "margin-top": "5px",
+              "white-space": "nowrap",
+              "overflow": "hidden",
+              "text-overflow": "ellipsis"
+            },
+            "txtContent": "[$Title]"
+          },
+          {
+            "elmType": "div",
+            "style": {
+              "font-size": "12px",
+              "color": "#4a566d",
+              "margin-top": "4px",
+              "white-space": "nowrap",
+              "overflow": "hidden",
+              "text-overflow": "ellipsis"
+            },
+            "txtContent": "[$Territory]"
+          },
+          {
+            "elmType": "div",
+            "style": {
+              "display": "flex",
+              "align-items": "center",
+              "margin-top": "auto",
+              "padding-top": "12px",
+              "border-top": "1px solid #e3e8ea",
+              "color": "#173d78"
+            },
+            "children": [
+              {
+                "elmType": "span",
+                "attributes": {
+                  "iconName": "People"
+                },
+                "style": {
+                  "margin-right": "7px",
+                  "font-size": "15px"
+                }
+              },
+              {
+                "elmType": "span",
+                "style": {
+                  "font-size": "11px",
+                  "font-weight": "700"
+                },
+                "txtContent": "=[$FacilitatorCount] + if([$FacilitatorCount] == 1, ' facilitator', ' facilitators')"
+              },
+              {
+                "elmType": "span",
+                "attributes": {
+                  "iconName": "ChevronRight"
+                },
+                "style": {
+                  "margin-left": "auto",
+                  "font-size": "14px"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
