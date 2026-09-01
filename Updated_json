@@ -40,12 +40,12 @@
               {
                 "elmType": "img",
                 "attributes": {
-                  "src": "=getUserImage([$Employee.email], 'M')",
+                  "src": "[$Employee.picture]",
                   "alt": "='Portrait of ' + [$Employee.title]"
                 },
                 "defaultHoverField": "[$Employee]",
                 "style": {
-                  "display": "=if([$Employee.email] == '', 'none', '')",
+                  "display": "=if([$Employee.picture] == '', 'none', '')",
                   "width": "76px",
                   "height": "76px",
                   "border-radius": "50%",
@@ -57,7 +57,7 @@
               {
                 "elmType": "div",
                 "style": {
-                  "display": "=if([$Employee.email] == '', 'flex', 'none')",
+                  "display": "=if([$Employee.picture] == '', 'flex', 'none')",
                   "align-items": "center",
                   "justify-content": "center",
                   "width": "76px",
@@ -69,7 +69,7 @@
                   "font-weight": "700",
                   "margin-right": "14px"
                 },
-                "txtContent": "=substring([$field_1],0,1)"
+                "txtContent": "=substring([$Title],0,1)"
               },
               {
                 "elmType": "div",
@@ -88,7 +88,7 @@
                       "overflow": "hidden",
                       "text-overflow": "ellipsis"
                     },
-                    "txtContent": "=if([$Employee.title] == '', [$field_1], [$Employee.title])"
+                    "txtContent": "=if([$Employee.title] == '', [$Title], [$Employee.title])"
                   },
                   {
                     "elmType": "div",
@@ -98,7 +98,7 @@
                       "color": "#4a566d",
                       "margin-top": "4px"
                     },
-                    "txtContent": "[$field_3]"
+                    "txtContent": "[$field_2]"
                   },
                   {
                     "elmType": "div",
@@ -122,7 +122,7 @@
                       },
                       {
                         "elmType": "span",
-                        "txtContent": "[$field_4]"
+                        "txtContent": "[$field_3]"
                       }
                     ]
                   }
@@ -141,8 +141,8 @@
               "margin-top": "15px",
               "font-size": "10px",
               "font-weight": "700",
-              "color": "=if([$field_7] == 'Available this week', '#246153', if([$field_7] == 'Available next week', '#245d72', '#74551f'))",
-              "background-color": "=if([$field_7] == 'Available this week', '#e6f4ef', if([$field_7] == 'Available next week', '#e7f2f5', '#fff3db'))"
+              "color": "=if([$field_6] == 'Available this week', '#246153', if([$field_6] == 'Available next week', '#245d72', '#74551f'))",
+              "background-color": "=if([$field_6] == 'Available this week', '#e6f4ef', if([$field_6] == 'Available next week', '#e7f2f5', '#fff3db'))"
             },
             "children": [
               {
@@ -157,7 +157,7 @@
               },
               {
                 "elmType": "span",
-                "txtContent": "[$field_7]"
+                "txtContent": "[$field_6]"
               }
             ]
           },
@@ -179,7 +179,7 @@
                   "font-size": "9px",
                   "font-weight": "600"
                 },
-                "txtContent": "[$field_5]"
+                "txtContent": "[$field_4]"
               },
               {
                 "elmType": "span",
@@ -191,7 +191,7 @@
                   "font-size": "9px",
                   "font-weight": "600"
                 },
-                "txtContent": "[$field_6]"
+                "txtContent": "[$field_5]"
               }
             ]
           },
@@ -205,7 +205,7 @@
               "overflow": "hidden",
               "margin-top": "13px"
             },
-            "txtContent": "[$field_9]"
+            "txtContent": "[$field_8]"
           },
           {
             "elmType": "button",
