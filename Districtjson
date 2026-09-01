@@ -131,3 +131,24 @@
     ]
   }
 }
+
+
+With(
+    {
+        employeeEmail: Coalesce(
+            ThisItem.Employee.Email,
+            ThisItem.Email
+        )
+    },
+    If(
+        IsBlank(employeeEmail),
+        SampleImage,
+        IfError(
+            Office365Users.UserPhotoV2(employeeEmail),
+            IfError(
+                ThisItem.Employee.Picture,
+                SampleImage
+            )
+        )
+    )
+)
