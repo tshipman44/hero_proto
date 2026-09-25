@@ -1,0 +1,8 @@
+DATA CHALLENGE
+What is college worth?
+Explore the data. Challenge assumptions.
+Explore the challenge
+
+Headline: DejaVu Serif Bold. Supporting copy: DejaVu Serif. Labels and CTA: DejaVu Sans.
+Colors: lavender #E7DEF3; plum #4C2054; white #FFFFFF.
+Canvas: 2048 x 688.
