@@ -1,0 +1,8 @@
+DATA CHALLENGE
+What is college worth?
+Explore the data. Challenge assumptions.
+Explore the challenge
+
+Font: DejaVu Sans; headline and CTA bold.
+Colors: navy #03142E; white #FFFFFF; cyan #02D8E5; lime #B6FF39.
+Canvas: 2048 x 688.
